@@ -136,7 +136,7 @@ export default function BecomeProviderPage() {
   }
 
   return (
-    <div className='min-h-screen bg-cream selection:bg-brand selection:text-white'>
+    <div className='min-h-screen bg-white/10 selection:bg-brand selection:text-white'>
       {/* --- Simple Navigation --- */}
       <header className='bg-white border-b-4 border-charcoal sticky top-0 z-50'>
         <div className='max-w-7xl mx-auto px-6 h-20 flex items-center justify-between'>
@@ -168,7 +168,7 @@ export default function BecomeProviderPage() {
               </h1>
             </div>
 
-            <p className='text-lg font-medium text-gray-600 leading-relaxed'>
+            <p className='text-lg font-medium text-gray-100 leading-relaxed'>
               Join the city&apos;s premier network of chefs and restaurants. We
               handle the logistics, you handle the flavor.
             </p>
@@ -210,7 +210,7 @@ export default function BecomeProviderPage() {
 
           {/* --- Right Column: Form --- */}
           <div className='md:col-span-7'>
-            <Card className='rounded-none border-4 border-charcoal bg-white shadow-[12px_12px_0px_0px_rgba(10,10,10,1)]'>
+            <Card className='rounded-none border-4 border-charcoal bg-white/10 shadow-[12px_12px_0px_0px_rgba(10,10,10,1)]'>
               <CardHeader className='space-y-1 bg-charcoal text-white p-8'>
                 <CardTitle className='font-serif font-black text-3xl uppercase tracking-tighter'>
                   Register Kitchen
@@ -229,12 +229,12 @@ export default function BecomeProviderPage() {
                       name='restaurantName'
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel className='font-black uppercase tracking-widest text-[10px] text-charcoal'>
+                          <FormLabel className='font-black uppercase tracking-widest text-[10px] text-white'>
                             Restaurant Name
                           </FormLabel>
                           <FormControl>
                             <div className='relative'>
-                              <Store className='absolute left-4 top-1/2 -translate-y-1/2 size-4 text-gray-400' />
+                              <Store className='absolute left-4 top-1/2 -translate-y-1/2 size-4 text-gray-100' />
                               <Input
                                 placeholder='E.G. THE RUSTIC BISTRO'
                                 {...field}
