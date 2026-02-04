@@ -223,7 +223,7 @@ export default function BecomeProviderPage() {
                 <Form {...form}>
                   <form
                     onSubmit={form.handleSubmit(onSubmit)}
-                    className='space-y-6'>
+                    className='space-y-6 text-white'>
                     <FormField
                       control={form.control}
                       name='restaurantName'
@@ -238,7 +238,7 @@ export default function BecomeProviderPage() {
                               <Input
                                 placeholder='E.G. THE RUSTIC BISTRO'
                                 {...field}
-                                className='h-14 pl-12 rounded-none border-2 border-charcoal focus-visible:ring-brand font-bold placeholder:text-gray-300 uppercase'
+                                className='h-14 pl-12 rounded-none border-2  border-charcoal focus-visible:ring-brand font-bold placeholder:text-gray-300 uppercase'
                               />
                             </div>
                           </FormControl>
@@ -252,7 +252,7 @@ export default function BecomeProviderPage() {
                       name='cuisineType'
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel className='font-black uppercase tracking-widest text-[10px] text-charcoal'>
+                          <FormLabel className='font-black uppercase tracking-widest text-[10px] text-white'>
                             Cuisine Type
                           </FormLabel>
                           <FormControl>
@@ -275,7 +275,7 @@ export default function BecomeProviderPage() {
                       name='address'
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel className='font-black uppercase tracking-widest text-[10px] text-charcoal'>
+                          <FormLabel className='font-black uppercase tracking-widest text-[10px] text-white'>
                             Business Address
                           </FormLabel>
                           <FormControl>
@@ -298,7 +298,7 @@ export default function BecomeProviderPage() {
                       name='coverImageUrl'
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel className='font-black uppercase tracking-widest text-[10px] text-charcoal'>
+                          <FormLabel className='font-black uppercase tracking-widest text-[10px] text-white'>
                             Cover Image URL (Optional)
                           </FormLabel>
                           <FormControl>

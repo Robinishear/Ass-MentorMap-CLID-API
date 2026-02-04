@@ -218,263 +218,213 @@ export default function MealDetailsPage() {
   }
 
   return (
-    <div className='min-h-screen bg-cream'>
-      {/* --- Sticky Header --- */}
-      <header className='bg-white border-b-4 border-charcoal sticky top-0 z-40'>
-        <div className='max-w-7xl mx-auto px-6 h-20 flex items-center justify-between'>
-          <Button
-            onClick={() => router.back()}
-            variant='ghost'
-            className='group font-black uppercase tracking-widest text-xs flex items-center gap-2 px-0 hover:bg-transparent'>
-            <div className='size-10 border-2 border-charcoal flex items-center justify-center group-hover:bg-charcoal group-hover:text-white transition-all'>
-              <ChevronLeft className='size-5' />
-            </div>
-            Back
-          </Button>
+    <div className='min-h-screen bg-[#0a0a0a] text-white'>
+  {/* --- Sticky Header --- */}
+  <header className='bg-black/20 backdrop-blur-xl border-b border-white/5 sticky top-0 z-40'>
+    <div className='max-w-7xl mx-auto px-6 h-20 flex items-center justify-between'>
+      <Button
+        onClick={() => router.back()}
+        variant='ghost'
+        className='group font-bold uppercase tracking-widest text-xs flex items-center gap-3 px-0 hover:bg-transparent text-white/70 hover:text-orange-400 transition-colors'>
+        <div className='size-10 rounded-full border border-white/10 flex items-center justify-center group-hover:border-orange-500/50 transition-all'>
+          <ChevronLeft className='size-5' />
+        </div>
+        Back
+      </Button>
 
-          <div className='flex items-center gap-4'>
-            <Badge className='bg-charcoal text-white rounded-none font-black text-[10px] uppercase tracking-[0.2em] px-3 py-1.5 hidden md:block'>
-              AUTHENTIC {meal.category.name}
+      <div className='flex items-center gap-4'>
+        <Badge className='bg-orange-500/10 text-orange-400 border border-orange-500/20 rounded-full font-bold text-[10px] uppercase tracking-[0.2em] px-4 py-2 hidden md:block'>
+          AUTHENTIC {meal.category.name}
+        </Badge>
+        <CartSheet />
+      </div>
+    </div>
+  </header>
+
+  <main className='max-w-7xl mx-auto px-6 py-12 md:py-20'>
+    <div className='grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-24 items-start'>
+      
+      {/* --- Image Section --- */}
+      <div className='lg:col-span-6 space-y-8'>
+        <div className='relative aspect-square rounded-[3rem] border border-white/10 bg-white/5 shadow-2xl overflow-hidden group'>
+          {meal.imageUrl ? (
+            <Image
+              src={meal.imageUrl}
+              alt={meal.name}
+              fill
+              className='object-cover transition-transform duration-1000 group-hover:scale-110'
+              priority
+            />
+          ) : (
+            <MealIllustration id={meal.id} />
+          )}
+          <div className='absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent' />
+          <div className='absolute bottom-8 left-8'>
+            <Badge className='bg-orange-500 text-white border-none rounded-full px-6 py-2 text-xs font-black uppercase tracking-widest shadow-xl shadow-orange-600/20'>
+              {meal.category.name}
             </Badge>
-            <CartSheet />
           </div>
         </div>
-      </header>
 
-      <main className='max-w-7xl mx-auto px-6 py-12 md:py-20 lg:py-24'>
-        <div className='grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-start'>
-          {/* --- Image Section --- */}
-          <div className='lg:col-span-7 space-y-8'>
-            <div className='relative aspect-video border-[6px] border-charcoal bg-white shadow-[12px_12px_0px_0px_rgba(255,87,34,1)] overflow-hidden'>
-              {meal.imageUrl ? (
-                <Image
-                  src={meal.imageUrl}
-                  alt={meal.name}
-                  fill
-                  className='object-cover'
-                  priority
-                />
-              ) : (
-                <MealIllustration id={meal.id} />
-              )}
-              <div className='absolute top-6 left-6 flex flex-col gap-3'>
-                <Badge className='w-fit bg-white text-charcoal border-2 border-charcoal rounded-none px-4 py-2 text-xs font-black uppercase tracking-widest shadow-[4px_4px_0px_0px_rgba(10,10,10,1)]'>
-                  {meal.category.name}
-                </Badge>
-              </div>
+        <div className='grid grid-cols-3 gap-4'>
+          {[
+            { icon: Clock, label: "25-30 MIN" },
+            { icon: Star, label: averageRating > 0 ? `${averageRating.toFixed(1)} (${reviews.length})` : "NO REVIEWS", active: averageRating > 0 },
+            { icon: ShieldCheck, label: "QUALITY CHECK" }
+          ].map((item, idx) => (
+            <div key={idx} className='bg-white/5 border border-white/10 rounded-[1.5rem] p-5 flex flex-col items-center gap-2 backdrop-blur-sm'>
+              <item.icon className={`size-5 ${item.active ? "text-orange-400 fill-orange-400" : "text-orange-400"}`} />
+              <span className='text-[9px] font-bold uppercase tracking-widest text-white/60 text-center'>
+                {item.label}
+              </span>
             </div>
+          ))}
+        </div>
+      </div>
 
-            <div className='grid grid-cols-2 md:grid-cols-3 gap-4'>
-              <div className='bg-white border-2 border-charcoal p-4 flex flex-col items-center gap-2'>
-                <Clock className='size-5 text-brand' />
-                <span className='text-[10px] font-black uppercase tracking-widest text-charcoal'>
-                  25-30 MIN
-                </span>
-              </div>
-              <div className='bg-white border-2 border-charcoal p-4 flex flex-col items-center gap-2'>
-                <Star
-                  className={`size-5 ${averageRating > 0 ? "text-brand fill-brand" : "text-gray-200"}`}
-                />
-                <span className='text-[10px] font-black uppercase tracking-widest text-charcoal'>
-                  {averageRating > 0
-                    ? `${averageRating.toFixed(1)} (${reviews.length})`
-                    : "NO REVIEWS"}
-                </span>
-              </div>
-              <div className='bg-white border-2 border-charcoal p-4 flex flex-col items-center gap-2 col-span-2 md:col-span-1'>
-                <ShieldCheck className='size-5 text-brand' />
-                <span className='text-[10px] font-black uppercase tracking-widest text-charcoal'>
-                  QUALITY CHECKED
-                </span>
-              </div>
-            </div>
-          </div>
-
-          {/* --- Content Section --- */}
-          <div className='lg:col-span-5 space-y-10'>
-            <div className='space-y-4'>
-              <h1 className='text-5xl md:text-7xl font-serif font-black text-charcoal tracking-tighter leading-[0.9] uppercase italic'>
-                {meal.name}
-              </h1>
-              <div className='flex items-center gap-4 py-2'>
-                <div className='size-3 bg-brand animate-pulse' />
-                <p className='text-3xl font-black text-brand tracking-tighter font-mono'>
-                  ${Number(meal.price).toFixed(2)}
-                </p>
-              </div>
-            </div>
-
-            <p className='text-lg font-medium text-gray-600 leading-relaxed border-l-4 border-charcoal/10 pl-6'>
-              {meal.description ||
-                "Indulge in this chef-crafted masterpiece. Every ingredient is sourced locally and prepared fresh for the ultimate flavor experience."}
+      {/* --- Content Section --- */}
+      <div className='lg:col-span-6 space-y-10'>
+        <div className='space-y-6'>
+          <h1 className='text-6xl md:text-8xl font-bold text-white tracking-tighter leading-none'>
+            {meal.name}
+          </h1>
+          <div className='flex items-center gap-4'>
+            <div className='h-px w-12 bg-orange-500' />
+            <p className='text-4xl font-black text-orange-400 tracking-tighter'>
+              ${Number(meal.price).toFixed(2)}
             </p>
+          </div>
+        </div>
 
-            {/* --- Restaurant Info --- */}
-            <Card className='rounded-none border-4 border-charcoal bg-cream shadow-[8px_8px_0px_0px_rgba(10,10,10,1)]'>
-              <CardContent className='p-6 space-y-4'>
-                <div className='flex items-center gap-3'>
-                  <div className='size-12 bg-charcoal border-2 border-charcoal flex items-center justify-center'>
-                    <Store className='size-6 text-white' />
-                  </div>
-                  <div>
-                    <p className='text-[10px] font-black text-brand uppercase tracking-[0.2em]'>
-                      Prepared by
-                    </p>
-                    <h3 className='font-serif font-black text-lg text-charcoal uppercase'>
-                      {meal.provider.restaurantName}
-                    </h3>
-                  </div>
-                </div>
-                <Separator className='bg-charcoal/10' />
-                <div className='flex items-center gap-3 text-xs font-bold text-gray-500 uppercase tracking-widest'>
-                  <MapPin className='size-4 text-brand shrink-0' />
-                  <span className='truncate'>{meal.provider.address}</span>
-                </div>
-              </CardContent>
-            </Card>
+        <p className='text-lg font-light text-gray-400 leading-relaxed border-l-2 border-orange-500/30 pl-8'>
+          {meal.description || "Chef-crafted masterpiece prepared with seasonal local ingredients."}
+        </p>
 
-            {/* --- Action Section --- */}
-            <div className='pt-6 space-y-6'>
-              <div className='flex items-center justify-between bg-white border-4 border-charcoal p-4 shadow-[6px_6px_0px_0px_rgba(10,10,10,1)]'>
-                <div className='flex items-center gap-6'>
-                  <Button
-                    variant='ghost'
-                    size='icon'
-                    className='size-10 border-2 border-charcoal rounded-none hover:bg-charcoal hover:text-white'
-                    onClick={() => setQuantity(Math.max(1, quantity - 1))}>
-                    <Minus className='size-4' />
-                  </Button>
-                  <span className='text-2xl font-black text-charcoal w-8 text-center'>
-                    {quantity}
-                  </span>
-                  <Button
-                    variant='ghost'
-                    size='icon'
-                    className='size-10 border-2 border-charcoal rounded-none hover:bg-charcoal hover:text-white'
-                    onClick={() => setQuantity(quantity + 1)}>
-                    <Plus className='size-4' />
-                  </Button>
-                </div>
-                <div className='text-right'>
-                  <p className='text-[8px] font-black text-gray-400 uppercase tracking-widest'>
-                    Subtotal
-                  </p>
-                  <p className='text-xl font-black text-charcoal tracking-tight font-mono'>
-                    ${(Number(meal.price) * quantity).toFixed(2)}
-                  </p>
-                </div>
+        {/* --- Restaurant Info --- */}
+        <Card className='rounded-[2.5rem] border border-white/10 bg-white/5 backdrop-blur-md shadow-xl overflow-hidden'>
+          <CardContent className='p-8 space-y-6'>
+            <div className='flex items-center gap-4'>
+              <div className='size-14 rounded-2xl bg-orange-500/10 border border-orange-500/20 flex items-center justify-center'>
+                <Store className='size-7 text-orange-400' />
               </div>
+              <div>
+                <p className='text-[10px] font-black text-orange-500/60 uppercase tracking-[0.2em] mb-1'>
+                  Kitchen Origin
+                </p>
+                <h3 className='font-bold text-xl text-white uppercase'>
+                  {meal.provider.restaurantName}
+                </h3>
+              </div>
+            </div>
+            <div className='flex items-center gap-3 text-sm font-medium text-gray-400 border-t border-white/5 pt-6'>
+              <MapPin className='size-4 text-orange-400 shrink-0' />
+              <span className='truncate'>{meal.provider.address}</span>
+            </div>
+          </CardContent>
+        </Card>
 
+        {/* --- Action Section --- */}
+        <div className='space-y-6'>
+          <div className='flex items-center justify-between bg-white/5 border border-white/10 rounded-[2rem] p-4 backdrop-blur-md'>
+            <div className='flex items-center gap-6'>
               <Button
-                onClick={handleAddToCart}
-                className='w-full h-20 bg-charcoal text-white rounded-none border-4 border-charcoal font-black uppercase tracking-[0.15em] text-lg hover:bg-brand hover:border-black transition-all shadow-[10px_10px_0px_0px_rgba(255,87,34,1)] active:translate-x-1 active:translate-y-1 active:shadow-none group'>
-                <ShoppingCart className='size-6 mr-3 group-hover:scale-110 transition-transform' />
-                Add to Cart & Order
+                variant='ghost'
+                size='icon'
+                className='size-12 rounded-full border border-white/10 hover:bg-orange-500 hover:text-white transition-all text-white'
+                onClick={() => setQuantity(Math.max(1, quantity - 1))}>
+                <Minus className='size-4' />
+              </Button>
+              <span className='text-3xl font-black text-white w-10 text-center'>
+                {quantity}
+              </span>
+              <Button
+                variant='ghost'
+                size='icon'
+                className='size-12 rounded-full border border-white/10 hover:bg-orange-500 hover:text-white transition-all text-white'
+                onClick={() => setQuantity(quantity + 1)}>
+                <Plus className='size-4' />
               </Button>
             </div>
-          </div>
-        </div>
-
-        {/* --- Reviews Section --- */}
-        <section className='mt-24 space-y-12'>
-          <div className='flex items-end justify-between border-b-8 border-charcoal pb-6'>
-            <div className='space-y-2'>
-              <span className='text-brand font-black uppercase tracking-[0.3em] text-[10px]'>
-                Community Voice
-              </span>
-              <h2 className='text-5xl md:text-7xl font-serif font-black text-charcoal tracking-tighter italic leading-none'>
-                Kitchen <span className='text-brand not-italic'>Talk.</span>
-              </h2>
-            </div>
-            <div className='text-right hidden md:block'>
-              <div className='flex items-center gap-1 justify-end mb-1'>
-                {[1, 2, 3, 4, 5].map((s) => (
-                  <Star
-                    key={s}
-                    className={`size-4 ${Math.round(averageRating) >= s ? "text-brand fill-brand" : "text-gray-200"}`}
-                  />
-                ))}
-              </div>
-              <p className='text-[10px] font-black uppercase tracking-widest text-charcoal/40'>
-                {reviews.length} Reviews logged
+            <div className='text-right pr-4'>
+              <p className='text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-1'>Subtotal</p>
+              <p className='text-2xl font-black text-white'>
+                ${(Number(meal.price) * quantity).toFixed(2)}
               </p>
             </div>
           </div>
 
-          {reviews.length > 0 ? (
-            <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8'>
-              {reviews.map((review) => (
-                <Card
-                  key={review.id}
-                  className='rounded-none border-4 border-charcoal bg-white shadow-[8px_8px_0px_0px_rgba(10,10,10,1)] overflow-hidden flex flex-col'>
-                  <CardContent className='p-8 space-y-6 grow'>
-                    <div className='flex justify-between items-start'>
-                      <div className='flex items-center gap-3'>
-                        <Avatar className='size-10 border-2 border-charcoal rounded-none'>
-                          <AvatarImage
-                            src={review.customer.image || ""}
-                            className='object-cover'
-                          />
-                          <AvatarFallback className='bg-brand text-white font-black text-xs uppercase'>
-                            {review.customer.name.charAt(0)}
-                          </AvatarFallback>
-                        </Avatar>
-                        <div>
-                          <p className='font-black text-xs uppercase text-charcoal leading-none mb-1'>
-                            {review.customer.name}
-                          </p>
-                          <p className='text-[8px] font-bold text-gray-400 uppercase tracking-widest'>
-                            {new Date(review.createdAt).toLocaleDateString()}
-                          </p>
-                        </div>
-                      </div>
-                      <div className='bg-charcoal text-white px-2 py-1 flex items-center gap-1'>
-                        <span className='text-[10px] font-black'>
-                          {review.rating}
-                        </span>
-                        <Star className='size-2.5 fill-brand text-brand' />
-                      </div>
-                    </div>
-
-                    <div className='relative'>
-                      <MessageSquare className='absolute -left-2 -top-2 size-8 text-brand/10 -rotate-12' />
-                      <p className='relative z-10 text-sm font-bold text-charcoal leading-relaxed uppercase italic'>
-                        &quot;
-                        {review.comment ||
-                          "AMAZING FLAVOR, HIGHLY RECOMMENDED!"}
-                        &quot;
-                      </p>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          ) : (
-            <div className='py-20 border-4 border-charcoal border-dashed bg-white/50 flex flex-col items-center justify-center text-center p-12 space-y-6'>
-              <div className='size-16 bg-white border-2 border-charcoal flex items-center justify-center rotate-6'>
-                <MessageSquare className='size-8 text-charcoal/10' />
-              </div>
-              <div>
-                <h3 className='text-2xl font-serif font-black text-charcoal uppercase'>
-                  The silence is delicious
-                </h3>
-                <p className='text-xs font-bold text-gray-400 uppercase tracking-widest mt-2'>
-                  Be the first to share your experience after ordering!
-                </p>
-              </div>
-            </div>
-          )}
-        </section>
-      </main>
-
-      {/* --- Simple Footer --- */}
-      <footer className='mt-20 border-t-4 border-charcoal bg-white py-12'>
-        <div className='max-w-7xl mx-auto px-6 text-center'>
-          <p className='text-[10px] font-black text-charcoal uppercase tracking-[0.4em]'>
-            Authentic Flavor Guaranteed • FoodHub Culinary Network
-          </p>
+          <Button
+            onClick={handleAddToCart}
+            className='w-full h-20 bg-orange-500 hover:bg-orange-600 text-white rounded-[2rem] font-black uppercase tracking-[0.2em] text-lg transition-all shadow-xl shadow-orange-600/20 active:scale-[0.98] group'>
+            <ShoppingCart className='size-6 mr-3 group-hover:rotate-12 transition-transform' />
+            Order This Meal
+          </Button>
         </div>
-      </footer>
+      </div>
     </div>
+
+    {/* --- Reviews Section --- */}
+    <section className='mt-32 space-y-16'>
+      <div className='text-center max-w-2xl mx-auto space-y-4'>
+        <h2 className='text-5xl md:text-6xl font-bold text-white tracking-tighter'>
+          Kitchen <span className="italic text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-yellow-400">Talk</span>
+        </h2>
+        <div className='flex items-center justify-center gap-2'>
+           <div className='h-px w-8 bg-white/20' />
+           <p className='text-xs font-bold text-gray-500 uppercase tracking-[0.3em]'>
+             {reviews.length} Verified Reviews
+           </p>
+           <div className='h-px w-8 bg-white/20' />
+        </div>
+      </div>
+
+      {reviews.length > 0 ? (
+        <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8'>
+          {reviews.map((review) => (
+            <Card key={review.id} className='rounded-[2.5rem] border border-white/5 bg-white/5 backdrop-blur-md overflow-hidden hover:border-orange-500/30 transition-all duration-500'>
+              <CardContent className='p-8 space-y-6'>
+                <div className='flex justify-between items-start'>
+                  <div className='flex items-center gap-4'>
+                    <Avatar className='size-12 rounded-2xl border border-white/10'>
+                      <AvatarImage src={review.customer.image || ""} />
+                      <AvatarFallback className='bg-orange-500 text-white font-black'>
+                        {review.customer.name.charAt(0)}
+                      </AvatarFallback>
+                    </Avatar>
+                    <div>
+                      <p className='font-bold text-sm text-white uppercase'>{review.customer.name}</p>
+                      <p className='text-[10px] font-medium text-gray-500'>{new Date(review.createdAt).toLocaleDateString()}</p>
+                    </div>
+                  </div>
+                  <div className='bg-orange-500/10 border border-orange-500/20 text-orange-400 px-3 py-1.5 rounded-full flex items-center gap-1.5'>
+                    <span className='text-xs font-black'>{review.rating}</span>
+                    <Star className='size-3 fill-orange-400' />
+                  </div>
+                </div>
+                <p className='text-gray-400 text-sm italic font-medium leading-relaxed'>
+                  &quot;{review.comment || "AMAZING FLAVOR, HIGHLY RECOMMENDED!"}&quot;
+                </p>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      ) : (
+        <div className='py-20 rounded-[3rem] border border-white/5 border-dashed bg-white/5 flex flex-col items-center justify-center text-center p-12 space-y-4'>
+           <MessageSquare className='size-12 text-white/10 mb-2' />
+           <h3 className='text-xl font-bold text-white uppercase tracking-tight'>The silence is delicious</h3>
+           <p className='text-xs font-medium text-gray-500 uppercase tracking-widest'>Be the first to share your experience</p>
+        </div>
+      )}
+    </section>
+  </main>
+
+  <footer className='mt-32 border-t border-white/5 bg-black/40 py-16'>
+    <div className='max-w-7xl mx-auto px-6 text-center'>
+      <p className='text-[10px] font-bold text-white/30 uppercase tracking-[0.5em]'>
+        Premium Culinary Experience • FoodHub Network 2026
+      </p>
+    </div>
+  </footer>
+</div>
   );
 }
