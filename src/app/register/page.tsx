@@ -1,12 +1,11 @@
-import RegisterPage from '@/components/Authentication/RegisterPage';
-import React from 'react';
+import { Metadata } from "next";
+import { RegisterContent } from "@/components/auth/RegisterContent";
 
-const page = () => {
-  return (
-    <div>
-      <RegisterPage></RegisterPage>
-    </div>
-  );
+export const metadata: Metadata = {
+  title: "Create Account",
+  description: "Join FoodHub and start your culinary journey today.",
 };
 
-export default page;
+export default function RegisterPage() {
+  return <RegisterContent />;
+}

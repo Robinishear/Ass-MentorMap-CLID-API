@@ -1,12 +1,26 @@
-import React from 'react';
-import AccountPageContent from '@/components/AccountPageContent/AccountPageContent';
+import { Suspense } from "react";
+import { Metadata } from "next";
+import { AccountContent } from "@/components/account/AccountContent";
+import { LoadingSpinner } from "@/components/ui/loading-spinner";
 
-const page = () => {
-  return (
-    <div>
-      <AccountPageContent></AccountPageContent>
-    </div>
-  );
+export const metadata: Metadata = {
+  title: "My Account",
+  description: "Manage your profile, orders, and restaurant information.",
 };
 
-export default page;
+export default function AccountPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className='min-h-screen bg-cream'>
+          <LoadingSpinner
+            text='Loading Account...'
+            size='xl'
+            className='h-screen'
+          />
+        </div>
+      }>
+      <AccountContent />
+    </Suspense>
+  );
+}

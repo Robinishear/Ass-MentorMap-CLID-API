@@ -1,12 +1,11 @@
-import LoginPage from '@/components/Authentication/LoginPage';
-import React from 'react';
+import { Metadata } from "next";
+import { LoginContent } from "@/components/auth/LoginContent";
 
-const page = () => {
-  return (
-    <div>
-      <LoginPage></LoginPage>
-    </div>
-  );
+export const metadata: Metadata = {
+  title: "Sign In",
+  description: "Log in to your FoodHub account to order delicious meals.",
 };
 
-export default page;
+export default function LoginPage() {
+  return <LoginContent />;
+}
